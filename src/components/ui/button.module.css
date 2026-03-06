@@ -1,0 +1,21 @@
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnBgRed {
+  background-color: rgb(219, 47, 47);
+  color: white;
+}
+
+.btnBgBlue {
+  background-color: rgb(17, 132, 240);
+  color: white;
+}
+
+.btnBgBlack {
+  background-color: black;
+  color: white;
+}
