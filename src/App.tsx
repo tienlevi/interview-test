@@ -1,11 +1,18 @@
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { routers } from "./routes/routes";
+
 function App() {
   return (
-    <div
-      className=""
-      style={{ textAlign: "center", fontWeight: "bold", fontSize: 24 }}
-    >
-      Quiz
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route>
+          {routers.map((route) => (
+            <Route key={route.id} path={route.href} element={route.element} />
+          ))}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
