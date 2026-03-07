@@ -1,0 +1,33 @@
+.quizContainer {
+  margin-top: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quizName {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.quizDescription {
+  font-size: 16px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

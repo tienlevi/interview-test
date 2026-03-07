@@ -1,0 +1,17 @@
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.container {
+  max-width: 768px;
+  margin: auto;
+}
+
+.container .btn {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  margin-top: 12px;
+}
