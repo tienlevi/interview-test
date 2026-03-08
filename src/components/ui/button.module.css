@@ -6,12 +6,12 @@
 }
 
 .btnBgRed {
-  background-color: rgb(219, 47, 47);
+  background-color: var(--red-color);
   color: white;
 }
 
 .btnBgBlue {
-  background-color: rgb(17, 132, 240);
+  background-color: var(--primary-color);
   color: white;
 }
 
