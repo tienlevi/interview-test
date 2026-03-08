@@ -1,13 +1,17 @@
-import { mockQuizzes } from "@/constants/mockData";
 import styles from "./styles.module.css";
 import homeStyles from "@/pages/pages.module.css";
+import { IQuiz } from "@/interfaces/quiz";
 
-function QuizList() {
+interface Props {
+  data: IQuiz[];
+}
+
+function QuizList({ data }: Props) {
   return (
     <div className={styles.quizContainer}>
       <div className={homeStyles.title}>Questions</div>
       <div className={styles.quiz}>
-        {mockQuizzes.map((quiz) => (
+        {data.map((quiz) => (
           <div key={quiz.id}>
             <div className={styles.quizName}>
               {quiz.id}. {quiz.name}
