@@ -1,18 +1,15 @@
 import styles from "./input.module.css";
 
 interface Props {
-  value: string;
-  onChange: () => void;
+  className?: string;
   placeholder?: string;
 }
 
-function Input({ value, onChange, placeholder = "Enter..." }: Props) {
+function Input({ className = "", placeholder = "Enter..." }: Props) {
   return (
     <input
       type="text"
-      value={value}
-      onChange={onChange}
-      className={styles.input}
+      className={`${styles.input} ${className}`}
       placeholder={placeholder}
     />
   );
