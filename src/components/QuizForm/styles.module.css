@@ -43,3 +43,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.errorMessage {
+  color: var(--red-color);
+}

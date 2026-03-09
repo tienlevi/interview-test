@@ -1,7 +1,7 @@
 export interface IOption {
   id: string | number;
   name: string;
-  sortOrder: string;
+  sortOrder: number;
   isCorrect: boolean;
 }
 
