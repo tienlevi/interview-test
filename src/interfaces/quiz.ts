@@ -5,9 +5,15 @@ export interface IOption {
   isCorrect: boolean;
 }
 
-export interface IQuiz {
+export interface IQuestion {
   id: string | number;
   name: string;
   description: string;
   options: IOption[];
+}
+
+export interface IQuiz {
+  name: string;
+  description: string;
+  questions: IQuestion[];
 }

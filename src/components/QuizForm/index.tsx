@@ -8,24 +8,15 @@ function QuizForm() {
       <div className={styles.quizFormContainer}>
         <div className={styles.quizForm}>
           <form className={styles.quizFormSubmit}>
-            <div className={styles.quizLabel}>
-              <label htmlFor="">Name</label>
-              <Input />
-            </div>
-            <div className={styles.quizLabel}>
-              <label htmlFor="">Description</label>
-              <Input />
-            </div>
-            <div className={`${styles.quizLabel} ${styles.quizLabelOptions}`}>
-              <label htmlFor="" className={styles.quizLabelOption}>
-                Options
-              </label>
-              <Input className={styles.quizLabelOption} />
-              <Input className={styles.quizLabelOption} />
-              <Input className={styles.quizLabelOption} />
-              <Button className={styles.createQuiz} variant="blue">
-                Create option
-              </Button>
+            <div>
+              <div className={styles.quizLabel}>
+                <label htmlFor="">Name</label>
+                <Input />
+              </div>
+              <div className={styles.quizLabel}>
+                <label htmlFor="">Description</label>
+                <Input />
+              </div>
             </div>
           </form>
         </div>

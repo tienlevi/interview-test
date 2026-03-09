@@ -11,7 +11,7 @@ function Home() {
       <div className={styles.container}>
         <QuizList data={mockQuizzes} />
         <Link to={"/quiz-editor"} className={styles.btn}>
-          <Button variant="blue">Quiz editor page</Button>
+          <Button>Quiz editor page</Button>
         </Link>
       </div>
     </div>

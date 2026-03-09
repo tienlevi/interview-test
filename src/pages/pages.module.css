@@ -4,6 +4,10 @@
   text-align: center;
 }
 
+.description {
+  font-size: 20px;
+}
+
 .container {
   max-width: 768px;
   margin: auto;
@@ -20,15 +24,12 @@
   width: 100%;
 }
 
-.createQuiz {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 12px;
-  margin-bottom: 12px;
+.buttons {
   display: flex;
   justify-content: center;
+  gap: 8px;
 }
 
-.createQuiz > button {
+.createQuiz {
+  width: 150px;
 }

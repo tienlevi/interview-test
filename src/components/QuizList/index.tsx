@@ -3,15 +3,16 @@ import homeStyles from "@/pages/pages.module.css";
 import { IQuiz } from "@/interfaces/quiz";
 
 interface Props {
-  data: IQuiz[];
+  data: IQuiz;
 }
 
 function QuizList({ data }: Props) {
   return (
     <div className={styles.quizContainer}>
-      <div className={homeStyles.title}>Questions</div>
+      <div className={homeStyles.title}>{data.name}</div>
+      <div className={homeStyles.description}>{data.description}</div>
       <div className={styles.quiz}>
-        {data.map((quiz) => (
+        {data.questions.map((quiz) => (
           <div key={quiz.id}>
             <div className={styles.quizName}>
               {quiz.id}. {quiz.name}
