@@ -7,11 +7,13 @@ export const defaultOptionValues: IOption[] = [
     name: "",
     sortOrder: 1,
     isCorrect: false,
+    canDelete: false,
   },
   {
     id: randomId(),
     name: "",
     sortOrder: 2,
     isCorrect: false,
+    canDelete: false,
   },
 ];

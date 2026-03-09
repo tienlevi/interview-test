@@ -1,12 +1,13 @@
 export interface IOption {
-  id: string | number;
+  id: string;
   name: string;
   sortOrder: number;
   isCorrect: boolean;
+  canDelete?: boolean;
 }
 
 export interface IQuiz {
-  id: string | number;
+  id: string;
   name: string;
   description: string;
   options: IOption[];

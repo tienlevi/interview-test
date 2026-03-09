@@ -31,6 +31,15 @@
   margin: 4px 12px;
 }
 
+.quizOption {
+  display: flex;
+  width: 100%;
+}
+
+.quizOption div {
+  width: 90%;
+}
+
 .createQuiz {
   width: 50%;
   margin: auto;
@@ -46,4 +55,9 @@
 
 .errorMessage {
   color: var(--red-color);
+}
+
+.quizSelect {
+  padding: 6px;
+  border-radius: 8px;
 }
