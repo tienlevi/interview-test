@@ -19,3 +19,8 @@
   background-color: black;
   color: white;
 }
+
+.btnBgTeal {
+  background-color: var(--secondary-color);
+  color: black;
+}

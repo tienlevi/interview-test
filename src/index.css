@@ -9,5 +9,6 @@
   -moz-osx-font-smoothing: grayscale;
 
   --primary-color: rgb(17, 132, 240);
+  --secondary-color: rgb(22, 230, 202);
   --red-color: rgb(219, 47, 47);
 }

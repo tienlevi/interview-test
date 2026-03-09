@@ -3,7 +3,7 @@ import styles from "./button.module.css";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  variant?: "red" | "blue" | "black";
+  variant?: "red" | "blue" | "black" | "teal";
   children: ReactNode;
 }
 
@@ -12,6 +12,7 @@ function Button({ className, variant = "red", children, ...props }: Props) {
     red: styles.btnBgRed,
     blue: styles.btnBgBlue,
     black: styles.btnBgBlack,
+    teal: styles.btnBgTeal,
   };
 
   return (
