@@ -21,14 +21,12 @@
 }
 
 .createQuiz {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: center;
+  width: 150px;
 }
 
-.createQuiz > button {
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }

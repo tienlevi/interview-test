@@ -11,6 +11,12 @@
   gap: 8px;
 }
 
+.quizItem {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
 .quizName {
   font-size: 20px;
   font-weight: bold;

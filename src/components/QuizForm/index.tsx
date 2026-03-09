@@ -7,15 +7,19 @@ import Options from "./Options";
 import { useState } from "react";
 import { defaultOptionValues } from "@/constants/values";
 import { toast } from "react-toastify";
+import useQuizStore from "@/stores/useQuizStore";
+import { randomId } from "@/utils/random";
 
-interface FormValues extends Partial<IQuiz> {}
+interface FormValues extends IQuiz {}
 
 interface Props {
   onOpenForm: (openForm: boolean) => void;
 }
 
 function QuizForm({ onOpenForm }: Props) {
-  const methods = useForm<FormValues>({ defaultValues: { options: [] } });
+  const methods = useForm<FormValues>({
+    defaultValues: { id: randomId(), options: [] },
+  });
   const {
     register,
     formState: { errors },
@@ -23,17 +27,18 @@ function QuizForm({ onOpenForm }: Props) {
   } = methods;
   const [options, setOptions] = useState<IOption[]>(defaultOptionValues);
   const [isEmptyOption, setIsEmptyOption] = useState(false);
+  const { quiz, setQuiz } = useQuizStore();
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: IQuiz) => {
     const emptyOption = options.some((option) => option.name === "");
     const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
     setIsEmptyOption(emptyOption);
     if (!checkOptionTrueAnswer)
       return toast.warning("At least one option is true");
     if (isEmptyOption) return;
-    console.log("🚀 ~ onSubmit ~ data:", data);
+
     onOpenForm(false);
-    return data;
+    setQuiz([...quiz, data]);
   };
 
   return (
