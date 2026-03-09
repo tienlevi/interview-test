@@ -19,3 +19,9 @@
   background-color: black;
   color: white;
 }
+
+.outline {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: transparent;
+}
