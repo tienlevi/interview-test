@@ -12,7 +12,7 @@ function QuizList({ data }: Props) {
       <div className={homeStyles.title}>{data.name}</div>
       <div className={homeStyles.description}>{data.description}</div>
       <div className={styles.quiz}>
-        {data.questions.map((quiz) => (
+        {data.questions.map((quiz, index) => (
           <div key={quiz.id}>
             <div className={styles.quizName}>
               {quiz.id}. {quiz.name}
@@ -23,7 +23,7 @@ function QuizList({ data }: Props) {
                 <div key={option.id} className={styles.option}>
                   <input type="checkbox" />
                   <div>
-                    {option.sortOrder}. {option.name}
+                    {index + 1}. {option.name}
                   </div>
                 </div>
               ))}

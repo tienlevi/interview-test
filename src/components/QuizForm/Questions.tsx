@@ -6,6 +6,7 @@ import Input from "@/components/ui/input";
 import { defaultOptionValues } from "@/constants/values";
 import Button from "../ui/button";
 import { randomId } from "@/utils/random";
+import { toast } from "react-toastify";
 
 function Questions() {
   const {
@@ -57,6 +58,18 @@ function Questions() {
     const remainingOptions = options.filter((option) => option.id !== id);
     setOptions(remainingOptions);
     setValue("options", remainingOptions);
+  };
+
+  const onSubmit = (data: IQuestion) => {
+    const emptyOption = options.some((option) => option.name === "");
+    const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
+    setIsEmptyOption(emptyOption);
+    if (!checkOptionTrueAnswer)
+      return toast.warning("At least one option is true");
+    if (isEmptyOption) return;
+
+    console.log("🚀 ~ onSubmit ~ data:", data);
+    return data;
   };
 
   return (
@@ -112,6 +125,7 @@ function Questions() {
                       <Button
                         onClick={() => handleDeleteOption(option.id)}
                         type="button"
+                        variant="red"
                       >
                         Delete
                       </Button>
@@ -131,7 +145,11 @@ function Questions() {
           </div>
         )}
       </div>
-      <Button variant="black" className={styles.quizSubmit}>
+      <Button
+        onClick={handleSubmit(onSubmit)}
+        variant="black"
+        className={styles.quizSubmit}
+      >
         Submit
       </Button>
     </div>

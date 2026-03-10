@@ -1,17 +1,17 @@
-import { IOption } from "@/interfaces/quiz";
+import { IOption } from "@/interfaces/question";
 import { randomId } from "@/utils/random";
 
 export const defaultOptionValues: IOption[] = [
   {
     id: randomId(),
     name: "",
-    sortOrder: 1,
+    canDelete: false,
     isCorrect: false,
   },
   {
     id: randomId(),
     name: "",
-    sortOrder: 2,
+    canDelete: false,
     isCorrect: false,
   },
 ];
