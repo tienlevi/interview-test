@@ -1,5 +1,4 @@
-import QuizList from "@/components/QuizList";
-import { mockQuizzes } from "@/constants/mockData";
+// import QuizList from "@/components/QuizList";
 import QuizForm from "@/components/QuizForm";
 import Button from "@/components/ui/button";
 import styles from "./pages.module.css";
@@ -18,7 +17,7 @@ function QuizEditor() {
         </div>
       </div>
       <QuizForm />
-      <QuizList data={mockQuizzes} />
+      {/* <QuizList data={[]} /> */}
     </div>
   );
 }
