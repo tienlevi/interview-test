@@ -1,22 +1,24 @@
-import { ChangeEvent, useState } from "react";
-import { useForm } from "react-hook-form";
+import { ChangeEvent } from "react";
+import { useFormContext } from "react-hook-form";
 import styles from "./styles.module.css";
-import { IOption, IQuestion } from "@/interfaces/question";
+import { IOption } from "@/interfaces/question";
 import Input from "@/components/ui/input";
-import { defaultOptionValues } from "@/constants/values";
 import Button from "../ui/button";
 import { randomId } from "@/utils/random";
-import { toast } from "react-toastify";
+import { FormValues } from "@/interfaces/form";
 
-function Questions() {
+interface Props {
+  options: IOption[];
+  isEmptyOption: boolean;
+  onOptions: (options: IOption[]) => void;
+}
+
+function Questions({ options, isEmptyOption = false, onOptions }: Props) {
   const {
     register,
     formState: { errors },
-    handleSubmit,
     setValue,
-  } = useForm<IQuestion>();
-  const [options, setOptions] = useState<IOption[]>(defaultOptionValues);
-  const [isEmptyOption, setIsEmptyOption] = useState(false);
+  } = useFormContext<FormValues>();
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -27,7 +29,7 @@ function Questions() {
       name: e.target.value,
     };
     const updatedOptions = options.map((o) => (o.id === option.id ? data : o));
-    setOptions(updatedOptions);
+    onOptions(updatedOptions);
     setValue("options", updatedOptions);
   };
 
@@ -40,7 +42,7 @@ function Questions() {
       isCorrect: JSON.parse(e.target.value),
     };
     const updatedOptions = options.map((o) => (o.id === option.id ? data : o));
-    setOptions(updatedOptions);
+    onOptions(updatedOptions);
     setValue("options", updatedOptions);
   };
 
@@ -51,48 +53,40 @@ function Questions() {
       isCorrect: false,
       canDelete: true,
     };
-    setOptions((prev) => [...prev, data]);
+    onOptions([...options, data]);
   };
 
   const handleDeleteOption = (id: string) => {
     const remainingOptions = options.filter((option) => option.id !== id);
-    setOptions(remainingOptions);
+    onOptions(remainingOptions);
     setValue("options", remainingOptions);
   };
 
-  const onSubmit = (data: IQuestion) => {
-    const emptyOption = options.some((option) => option.name === "");
-    const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
-    setIsEmptyOption(emptyOption);
-    if (!checkOptionTrueAnswer)
-      return toast.warning("At least one option is true");
-    if (isEmptyOption) return;
-
-    console.log("🚀 ~ onSubmit ~ data:", data);
-    return data;
-  };
-
   return (
-    <div className={styles.quizFormContainer}>
+    <>
       <div className={styles.quizForm}>
         <div className={styles.quizTitle}>Question</div>
         <div className={styles.quizLabel}>
           <label htmlFor="">Name</label>
-          <Input {...register("name", { required: "Name is required" })} />
+          <Input
+            {...register("questionName", { required: "Name is required" })}
+          />
         </div>
-        {errors.name && (
-          <div className={styles.error}>{errors.name.message}</div>
+        {errors.questionName && (
+          <div className={styles.error}>{errors.questionName.message}</div>
         )}
         <div className={styles.quizLabel}>
           <label htmlFor="">Description</label>
           <Input
-            {...register("description", {
+            {...register("questionDescription", {
               required: "Description is required",
             })}
           />
         </div>
-        {errors.description && (
-          <div className={styles.error}>{errors.description.message}</div>
+        {errors.questionDescription && (
+          <div className={styles.error}>
+            {errors.questionDescription.message}
+          </div>
         )}
         <div className={`${styles.quizLabel} ${styles.quizLabelOptions}`}>
           <div className={`${styles.quizLabelOption} ${styles.quizTitle}`}>
@@ -145,14 +139,7 @@ function Questions() {
           </div>
         )}
       </div>
-      <Button
-        onClick={handleSubmit(onSubmit)}
-        variant="black"
-        className={styles.quizSubmit}
-      >
-        Submit
-      </Button>
-    </div>
+    </>
   );
 }
 
