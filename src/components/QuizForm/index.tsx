@@ -33,6 +33,18 @@ function QuizForm({ openForm, onOpenForm }: Props) {
   const [questions, setQuestions] = useState<IQuestion[]>(quiz.questions);
   const [isEmptyOption, setIsEmptyOption] = useState(false);
 
+  const handleDeleteQuestion = (id: string) => {
+    const remainingQuestions = questions.filter(
+      (question) => question.id !== id,
+    );
+    console.log(
+      "🚀 ~ handleDeleteQuestion ~ remainingQuestions:",
+      remainingQuestions,
+    );
+    setQuiz({ ...quiz, questions: remainingQuestions });
+    setQuestions(remainingQuestions);
+  };
+
   const onSubmit = (data: FormValues) => {
     if (openForm) {
       const emptyOption = options.some((option) => option.name === "");
@@ -85,6 +97,7 @@ function QuizForm({ openForm, onOpenForm }: Props) {
           description: quiz.description,
           questions: questions,
         }}
+        onDeleteQuestion={handleDeleteQuestion}
       />
       {openForm && (
         <Questions

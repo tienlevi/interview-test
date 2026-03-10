@@ -1,4 +1,3 @@
-// import QuizList from "@/components/QuizList";
 import QuizForm from "@/components/QuizForm";
 import Button from "@/components/ui/button";
 import styles from "./pages.module.css";
