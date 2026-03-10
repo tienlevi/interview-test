@@ -9,7 +9,4 @@ export interface FormQuestionValues {
 export interface FormValues {
   name: string;
   description: string;
-  questionName: string;
-  questionDescription: string;
-  options: IOption[];
 }

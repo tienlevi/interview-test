@@ -5,7 +5,7 @@ import { IOption } from "@/interfaces/question";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import { randomId } from "@/utils/random";
-import { FormQuestionValues, FormValues } from "@/interfaces/form";
+import { FormQuestionValues } from "@/interfaces/form";
 
 interface Props {
   options: IOption[];

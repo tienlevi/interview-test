@@ -15,15 +15,15 @@ function QuizList({ data }: Props) {
         {data.questions.map((quiz, index) => (
           <div key={quiz.id}>
             <div className={styles.quizName}>
-              {quiz.id}. {quiz.name}
+              {index + 1}. {quiz.name}
             </div>
             <div className={styles.quizDescription}>{quiz.description}</div>
             <div className={styles.options}>
-              {quiz.options.map((option) => (
+              {quiz.options.map((option, idx) => (
                 <div key={option.id} className={styles.option}>
                   <input type="checkbox" />
                   <div>
-                    {index + 1}. {option.name}
+                    {idx + 1}. {option.name}
                   </div>
                 </div>
               ))}

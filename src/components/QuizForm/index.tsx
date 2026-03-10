@@ -5,11 +5,17 @@ import Questions from "./Questions";
 import { FormValues } from "@/interfaces/form";
 import Button from "@/components/ui/button";
 import { useState } from "react";
-import { IOption } from "@/interfaces/question";
+import { IOption, IQuestion } from "@/interfaces/question";
 import { defaultOptionValues } from "@/constants/values";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-function QuizForm() {
+interface Props {
+  openForm: boolean;
+  onOpenForm: (openForm: boolean) => void;
+}
+
+function QuizForm({ openForm, onOpenForm }: Props) {
   const methods = useForm<FormValues>({
     defaultValues: {},
   });
@@ -18,18 +24,20 @@ function QuizForm() {
     formState: { errors },
     handleSubmit,
   } = methods;
+  const navigate = useNavigate();
   const [options, setOptions] = useState<IOption[]>(defaultOptionValues);
+  const [questions, setQuestions] = useState<IQuestion[]>(quiz.questions);
   const [isEmptyOption, setIsEmptyOption] = useState(false);
 
   const onSubmit = (data: FormValues) => {
     const emptyOption = options.some((option) => option.name === "");
+
     const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
     setIsEmptyOption(emptyOption);
     if (!checkOptionTrueAnswer)
       return toast.warning("At least one option is true");
     if (isEmptyOption) return;
-    console.log("🚀 ~ onSubmit ~ data:", data);
-
+    console.log(data);
     return data;
   };
 
@@ -59,19 +67,26 @@ function QuizForm() {
             )}
           </form>
         </div>
+      </div>
+
+      {openForm && (
         <Questions
+          questions={questions}
           options={options}
           isEmptyOption={isEmptyOption}
+          onEmptyOption={setIsEmptyOption}
+          onQuestions={setQuestions}
           onOptions={setOptions}
+          onCloseForm={onOpenForm}
         />
-        <Button
-          onClick={handleSubmit(onSubmit)}
-          variant="black"
-          className={styles.quizSubmit}
-        >
-          Submit
-        </Button>
-      </div>
+      )}
+      <Button
+        onClick={handleSubmit(onSubmit)}
+        variant="black"
+        className={styles.quizSubmit}
+      >
+        Submit
+      </Button>
     </FormProvider>
   );
 }

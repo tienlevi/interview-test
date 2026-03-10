@@ -1,30 +1,31 @@
 import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 import { FormQuestionValues } from "@/interfaces/form";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import styles from "../styles.module.css";
 import { IOption, IQuestion } from "@/interfaces/question";
 import Options from "./Options";
 import { toast } from "react-toastify";
+import { randomId } from "@/utils/random";
 
 interface Props {
   questions: IQuestion[];
   options: IOption[];
   isEmptyOption: boolean;
-  isEmptyQuestion: boolean;
   onOptions: (options: IOption[]) => void;
-  onEmptyQuestion: (value: boolean) => void;
+  onQuestions: (questions: IQuestion[]) => void;
   onEmptyOption: (value: boolean) => void;
+  onCloseForm: (value: boolean) => void;
 }
 
 function Questions({
   questions,
   options,
   isEmptyOption = false,
-  isEmptyQuestion = false,
   onOptions,
-  onEmptyQuestion,
+  onQuestions,
   onEmptyOption,
+  onCloseForm,
 }: Props) {
   const methods = useForm<FormQuestionValues>();
   const {
@@ -34,17 +35,24 @@ function Questions({
   } = methods;
 
   const handleCreateQuestion = (data: FormQuestionValues) => {
-    console.log("🚀 ~ handleCreateQuestion ~ data:", data);
     const emptyOption = options.some((option) => option.name === "");
-    const emptyQuestion = questions.some(
-      (question) => question.name === "" || question.description === "",
-    );
     const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
     onEmptyOption(emptyOption);
-    onEmptyQuestion(emptyQuestion);
+    onQuestions([
+      ...questions,
+      {
+        id: randomId(),
+        name: data.questionName,
+        description: data.questionDescription,
+        options: data.options,
+      },
+    ]);
     if (!checkOptionTrueAnswer)
       return toast.warning("At least one option is true");
     if (isEmptyOption) return;
+    console.log("🚀 ~ handleCreateQuestion ~ data:", data);
+
+    return data;
   };
   return (
     <FormProvider {...methods}>
@@ -80,13 +88,17 @@ function Questions({
             isEmptyOption={isEmptyOption}
             onOptions={onOptions}
           />
-          <Button
-            onClick={handleSubmit(handleCreateQuestion)}
-            variant="outline"
-            className={styles.create}
-          >
-            Create question
-          </Button>
+          <div className={styles.questionBtn}>
+            <Button onClick={() => onCloseForm(false)} variant="red">
+              Close form
+            </Button>
+            <Button
+              onClick={handleSubmit(handleCreateQuestion)}
+              variant="outline"
+            >
+              Create question
+            </Button>
+          </div>
         </div>
       </div>
     </FormProvider>
