@@ -99,15 +99,15 @@ function Options({ options, isEmptyOption = false, onOptions }: Props) {
             />
           </div>
         ))}
+        {isEmptyOption && (
+          <div className={`${styles.error} ${styles.quizLabelOption}`}>
+            Option is required
+          </div>
+        )}
         <Button onClick={handleCreateOption} className={styles.create}>
           Create option
         </Button>
       </div>
-      {isEmptyOption && (
-        <div className={`${styles.errorMessage} ${styles.quizLabelOption}`}>
-          Option is required
-        </div>
-      )}
     </>
   );
 }

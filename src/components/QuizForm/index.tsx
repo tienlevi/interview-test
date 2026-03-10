@@ -4,10 +4,12 @@ import styles from "./styles.module.css";
 import Questions from "./Questions";
 import { FormValues } from "@/interfaces/form";
 import Button from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IOption, IQuestion } from "@/interfaces/question";
 import { defaultOptionValues } from "@/constants/values";
 import { toast } from "react-toastify";
+import QuizList from "@/components/QuizList";
+import useQuizStore from "@/stores/useQuizStore";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
 }
 
 function QuizForm({ openForm, onOpenForm }: Props) {
+  const { quiz, setQuiz } = useQuizStore();
   const methods = useForm<FormValues>({
     defaultValues: {},
   });
@@ -23,6 +26,7 @@ function QuizForm({ openForm, onOpenForm }: Props) {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = methods;
   const navigate = useNavigate();
   const [options, setOptions] = useState<IOption[]>(defaultOptionValues);
@@ -30,16 +34,23 @@ function QuizForm({ openForm, onOpenForm }: Props) {
   const [isEmptyOption, setIsEmptyOption] = useState(false);
 
   const onSubmit = (data: FormValues) => {
-    const emptyOption = options.some((option) => option.name === "");
+    if (openForm) {
+      const emptyOption = options.some((option) => option.name === "");
 
-    const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
-    setIsEmptyOption(emptyOption);
-    if (!checkOptionTrueAnswer)
-      return toast.warning("At least one option is true");
-    if (isEmptyOption) return;
-    console.log(data);
-    return data;
+      const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
+      setIsEmptyOption(emptyOption);
+      if (!checkOptionTrueAnswer)
+        return toast.warning("At least one option is true");
+      if (isEmptyOption) return;
+
+      setQuiz({ ...data, questions: questions });
+    }
+    navigate("/");
   };
+
+  useEffect(() => {
+    reset({ name: quiz.name, description: quiz.description });
+  }, []);
 
   return (
     <FormProvider {...methods}>
@@ -68,7 +79,13 @@ function QuizForm({ openForm, onOpenForm }: Props) {
           </form>
         </div>
       </div>
-
+      <QuizList
+        data={{
+          name: quiz.name,
+          description: quiz.description,
+          questions: questions,
+        }}
+      />
       {openForm && (
         <Questions
           questions={questions}

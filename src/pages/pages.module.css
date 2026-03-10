@@ -22,14 +22,17 @@
 
 .editorPage {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
 }
 
-.createQuiz {
-  width: 150px;
+.createQuestion {
+  width: 180px;
 }
