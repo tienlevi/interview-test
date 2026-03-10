@@ -37,10 +37,7 @@ function QuizForm({ openForm, onOpenForm }: Props) {
     const remainingQuestions = questions.filter(
       (question) => question.id !== id,
     );
-    console.log(
-      "🚀 ~ handleDeleteQuestion ~ remainingQuestions:",
-      remainingQuestions,
-    );
+
     setQuiz({ ...quiz, questions: remainingQuestions });
     setQuestions(remainingQuestions);
   };
@@ -54,9 +51,8 @@ function QuizForm({ openForm, onOpenForm }: Props) {
       if (!checkOptionTrueAnswer)
         return toast.warning("At least one option is true");
       if (isEmptyOption) return;
-
-      setQuiz({ ...data, questions: questions });
     }
+    setQuiz({ ...data, questions: questions });
     navigate("/");
   };
 
@@ -68,7 +64,7 @@ function QuizForm({ openForm, onOpenForm }: Props) {
     <FormProvider {...methods}>
       <div className={styles.quizFormContainer}>
         <div className={styles.quizForm}>
-          <div className={styles.intro}>Intro Quiz</div>
+          <div className={styles.intro}>Infomation Quiz</div>
           <form className={styles.quizFormSubmit}>
             <div className={styles.quizLabel}>
               <label htmlFor="">Name</label>
