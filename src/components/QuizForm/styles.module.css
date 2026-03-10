@@ -1,3 +1,8 @@
+.intro {
+  font-size: 22px;
+  font-weight: bold;
+}
+
 .quizFormContainer {
   width: 100%;
   margin: 12px 0;
@@ -38,6 +43,14 @@
   border-radius: 8px;
 }
 
+.quizOption {
+  display: flex;
+}
+
+.quizOption div {
+  width: 95%;
+}
+
 .quizLabelOption {
   margin: 4px 12px;
 }
@@ -53,4 +66,13 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+.quizSelect {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.error {
+  color: var(--red-color);
 }
