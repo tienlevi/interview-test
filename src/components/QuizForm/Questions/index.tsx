@@ -7,36 +7,70 @@ import { IOption, IQuestion } from "@/interfaces/question";
 import Options from "./Options";
 import { toast } from "react-toastify";
 import { randomId } from "@/utils/random";
+import { useEffect } from "react";
+import useQuizStore from "@/stores/useQuizStore";
+import { defaultOptionValues } from "@/constants/values";
 
 interface Props {
+  question: IQuestion | null;
   questions: IQuestion[];
   options: IOption[];
   isEmptyOption: boolean;
+  isUpdate: boolean;
   onOptions: (options: IOption[]) => void;
+  onQuestion: (question: IQuestion | null) => void;
   onQuestions: (questions: IQuestion[]) => void;
   onEmptyOption: (value: boolean) => void;
   onCloseForm: (value: boolean) => void;
+  onUpdate: (value: boolean) => void;
 }
 
 function Questions({
+  question,
   questions,
   options,
   isEmptyOption = false,
+  isUpdate,
   onOptions,
+  onQuestion,
   onQuestions,
   onEmptyOption,
   onCloseForm,
+  onUpdate,
 }: Props) {
+  console.log("🚀 ~ Questions ~ question:", question);
+  const { quiz, setQuiz } = useQuizStore();
   const methods = useForm<FormQuestionValues>();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = methods;
+
+  const handleUpdateQuestion = (data: FormQuestionValues) => {
+    const updateData: IQuestion = {
+      id: question?.id,
+      name: data.questionName,
+      description: data.questionDescription,
+      options: data.options,
+    };
+    const updateQuestion = questions.map((q) =>
+      q.id === question?.id ? updateData : q,
+    );
+    onQuestions(updateQuestion);
+    setQuiz({ ...quiz, questions: updateQuestion });
+    reset();
+    onCloseForm(false);
+    onUpdate(false);
+  };
 
   const handleCreateQuestion = (data: FormQuestionValues) => {
     const emptyOption = options.some((option) => option.name === "");
     const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
+    if (!checkOptionTrueAnswer)
+      return toast.warning("At least one option is true");
+    if (isEmptyOption) return;
     onEmptyOption(emptyOption);
     onQuestions([
       ...questions,
@@ -47,13 +81,29 @@ function Questions({
         options: data.options,
       },
     ]);
-    if (!checkOptionTrueAnswer)
-      return toast.warning("At least one option is true");
-    if (isEmptyOption) return;
-    console.log("🚀 ~ handleCreateQuestion ~ data:", data);
-
-    return data;
+    reset();
+    onCloseForm(false);
   };
+
+  const handleCloseForm = () => {
+    onCloseForm(false);
+    onUpdate(false);
+    onQuestion(null);
+    onOptions(defaultOptionValues);
+    reset();
+  };
+
+  useEffect(() => {
+    if (isUpdate) {
+      reset({
+        options: question?.options,
+        questionName: question?.name,
+        questionDescription: question?.description,
+      });
+      onOptions(question?.options || []);
+    }
+  }, [isUpdate]);
+
   return (
     <FormProvider {...methods}>
       <div className={styles.quizFormContainer}>
@@ -89,15 +139,24 @@ function Questions({
             onOptions={onOptions}
           />
           <div className={styles.questionBtn}>
-            <Button onClick={() => onCloseForm(false)} variant="red">
+            <Button onClick={handleCloseForm} variant="red">
               Close form
             </Button>
-            <Button
-              onClick={handleSubmit(handleCreateQuestion)}
-              variant="outline"
-            >
-              Create question
-            </Button>
+            {isUpdate ? (
+              <Button
+                onClick={handleSubmit(handleUpdateQuestion)}
+                variant="outline"
+              >
+                Update question
+              </Button>
+            ) : (
+              <Button
+                onClick={handleSubmit(handleCreateQuestion)}
+                variant="outline"
+              >
+                Create question
+              </Button>
+            )}
           </div>
         </div>
       </div>

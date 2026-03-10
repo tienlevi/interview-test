@@ -6,7 +6,7 @@ export interface IOption {
 }
 
 export interface IQuestion {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   options: IOption[];

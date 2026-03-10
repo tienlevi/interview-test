@@ -31,6 +31,8 @@ function QuizForm({ openForm, onOpenForm }: Props) {
   const navigate = useNavigate();
   const [options, setOptions] = useState<IOption[]>(defaultOptionValues);
   const [questions, setQuestions] = useState<IQuestion[]>(quiz.questions);
+  const [question, setQuestion] = useState<IQuestion | null>(null);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [isEmptyOption, setIsEmptyOption] = useState(false);
 
   const handleDeleteQuestion = (id: string) => {
@@ -40,6 +42,13 @@ function QuizForm({ openForm, onOpenForm }: Props) {
 
     setQuiz({ ...quiz, questions: remainingQuestions });
     setQuestions(remainingQuestions);
+  };
+
+  const handleGetQuestion = (id: string) => {
+    onOpenForm(true);
+    setIsUpdate(true);
+    const ques = questions.find((q) => q.id === id);
+    setQuestion(ques || null);
   };
 
   const onSubmit = (data: FormValues) => {
@@ -94,16 +103,21 @@ function QuizForm({ openForm, onOpenForm }: Props) {
           questions: questions,
         }}
         onDeleteQuestion={handleDeleteQuestion}
+        getQuestion={handleGetQuestion}
       />
       {openForm && (
         <Questions
+          question={question!}
           questions={questions}
           options={options}
           isEmptyOption={isEmptyOption}
+          isUpdate={isUpdate}
           onEmptyOption={setIsEmptyOption}
+          onQuestion={setQuestion}
           onQuestions={setQuestions}
           onOptions={setOptions}
           onCloseForm={onOpenForm}
+          onUpdate={setIsUpdate}
         />
       )}
       <Button

@@ -7,9 +7,14 @@ import { useLocation } from "react-router-dom";
 interface Props {
   data: IQuiz;
   onDeleteQuestion?: (id: string) => void;
+  getQuestion?: (id: string) => void;
 }
 
-function QuizList({ data, onDeleteQuestion = () => {} }: Props) {
+function QuizList({
+  data,
+  onDeleteQuestion = () => {},
+  getQuestion = () => {},
+}: Props) {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -20,7 +25,7 @@ function QuizList({ data, onDeleteQuestion = () => {} }: Props) {
       <div className={styles.quiz}>
         {data.questions.map((question, index) => (
           <div key={question.id} className={styles.question}>
-            <div>
+            <div className="">
               <div className={styles.quizName}>
                 {index + 1}. {question.name}
               </div>
@@ -41,7 +46,13 @@ function QuizList({ data, onDeleteQuestion = () => {} }: Props) {
             {!isHomePage && (
               <div style={{ display: "flex", gap: 8 }}>
                 <Button
-                  onClick={() => onDeleteQuestion(question.id)}
+                  onClick={() => getQuestion(question.id || "")}
+                  variant="black"
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => onDeleteQuestion(question.id || "")}
                   variant="red"
                 >
                   Delete

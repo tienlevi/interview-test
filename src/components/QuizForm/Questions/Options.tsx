@@ -71,6 +71,7 @@ function Options({ options, isEmptyOption = false, onOptions }: Props) {
           >
             <p>{index + 1}.</p>
             <Input
+              value={option.name}
               onChange={(e) => handleInputChange(e, option)}
               containerClassName={styles.quizLabelOption}
               prefixNode={
@@ -78,7 +79,7 @@ function Options({ options, isEmptyOption = false, onOptions }: Props) {
                   <select
                     key={option.id}
                     name="isCorrect"
-                    defaultValue={"false"}
+                    value={String(option.isCorrect)}
                     onChange={(e) => handleSelectChange(e, option)}
                     className={styles.quizSelect}
                   >
