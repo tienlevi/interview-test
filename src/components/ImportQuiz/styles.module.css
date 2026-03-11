@@ -19,3 +19,9 @@
   border-radius: 8px;
   overflow-wrap: break-word;
 }
+
+@media screen and (width <= 768px) {
+  .importQuiz {
+    width: 100%;
+  }
+}
