@@ -13,13 +13,11 @@ import { defaultOptionValues } from "@/constants/values";
 
 interface Props {
   question: IQuestion | null;
-  questions: IQuestion[];
   options: IOption[];
   isEmptyOption: boolean;
   isUpdate: boolean;
   onOptions: (options: IOption[]) => void;
   onQuestion: (question: IQuestion | null) => void;
-  onQuestions: (questions: IQuestion[]) => void;
   onEmptyOption: (value: boolean) => void;
   onCloseForm: (value: boolean) => void;
   onUpdate: (value: boolean) => void;
@@ -27,18 +25,16 @@ interface Props {
 
 function Questions({
   question,
-  questions,
   options,
   isEmptyOption = false,
   isUpdate,
   onOptions,
   onQuestion,
-  onQuestions,
   onEmptyOption,
   onCloseForm,
   onUpdate,
 }: Props) {
-  const { quiz, setQuiz } = useQuizStore();
+  const { quiz, questions, setQuestions, setQuiz } = useQuizStore();
   const methods = useForm<FormQuestionValues>();
   const {
     register,
@@ -57,7 +53,7 @@ function Questions({
     const updateQuestion = questions.map((q) =>
       q.id === question?.id ? updateData : q,
     );
-    onQuestions(updateQuestion);
+    setQuestions(updateQuestion);
     setQuiz({ ...quiz, questions: updateQuestion });
     reset();
     onCloseForm(false);
@@ -71,7 +67,7 @@ function Questions({
       return toast.warning("At least one option is true");
     if (isEmptyOption) return;
     onEmptyOption(emptyOption);
-    onQuestions([
+    setQuestions([
       ...questions,
       {
         id: randomId(),

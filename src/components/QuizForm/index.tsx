@@ -18,7 +18,7 @@ interface Props {
 }
 
 function QuizForm({ openForm, onOpenForm }: Props) {
-  const { quiz, setQuiz } = useQuizStore();
+  const { quiz, questions, setQuiz, setQuestions } = useQuizStore();
   const methods = useForm<FormValues>({
     defaultValues: {},
   });
@@ -30,7 +30,6 @@ function QuizForm({ openForm, onOpenForm }: Props) {
   } = methods;
   const navigate = useNavigate();
   const [options, setOptions] = useState<IOption[]>(defaultOptionValues);
-  const [questions, setQuestions] = useState<IQuestion[]>(quiz?.questions);
   const [question, setQuestion] = useState<IQuestion | null>(null);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isEmptyOption, setIsEmptyOption] = useState(false);
@@ -111,13 +110,11 @@ function QuizForm({ openForm, onOpenForm }: Props) {
       {openForm && (
         <Questions
           question={question!}
-          questions={questions}
           options={options}
           isEmptyOption={isEmptyOption}
           isUpdate={isUpdate}
           onEmptyOption={setIsEmptyOption}
           onQuestion={setQuestion}
-          onQuestions={setQuestions}
           onOptions={setOptions}
           onCloseForm={onOpenForm}
           onUpdate={setIsUpdate}

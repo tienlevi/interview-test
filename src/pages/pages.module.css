@@ -33,6 +33,14 @@
   gap: 28px;
 }
 
+.form {
+  width: 50%;
+}
+
+.form button {
+  margin-top: 12px;
+}
+
 .buttons {
   display: flex;
   justify-content: center;
