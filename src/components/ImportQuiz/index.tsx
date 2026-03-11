@@ -1,9 +1,24 @@
 import { ChangeEvent, useRef, useState } from "react";
 import styles from "./styles.module.css";
+import Button from "../ui/button";
+import { validateInfo } from "@/utils/validates";
+import useQuizStore from "@/stores/useQuizStore";
+import { toast } from "react-toastify";
 
 function ImportQuiz() {
+  const { setQuiz, setQuestions } = useQuizStore();
   const [jsonFile, setJSONFile] = useState();
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleImport = () => {
+    const validateJSON = validateInfo.safeParse(jsonFile);
+    if (validateJSON.success) {
+      setQuiz(validateJSON.data);
+      setQuestions(validateJSON.data.questions || []);
+      return toast.success("Import quiz success");
+    }
+    return toast.error("Import quiz failed");
+  };
 
   const handleEvent = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -23,7 +38,10 @@ function ImportQuiz() {
       <div className={styles.title}>Upload quiz</div>
       <input type="file" ref={fileRef} accept=".json" onChange={handleEvent} />
       {jsonFile && (
-        <div className={styles.json}>{JSON.stringify(jsonFile)}</div>
+        <>
+          <div className={styles.json}>{JSON.stringify(jsonFile)}</div>
+          <Button onClick={handleImport}>Import JSON</Button>
+        </>
       )}
     </div>
   );
