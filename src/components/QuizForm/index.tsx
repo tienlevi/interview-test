@@ -30,7 +30,7 @@ function QuizForm({ openForm, onOpenForm }: Props) {
   } = methods;
   const navigate = useNavigate();
   const [options, setOptions] = useState<IOption[]>(defaultOptionValues);
-  const [questions, setQuestions] = useState<IQuestion[]>(quiz.questions);
+  const [questions, setQuestions] = useState<IQuestion[]>(quiz?.questions);
   const [question, setQuestion] = useState<IQuestion | null>(null);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isEmptyOption, setIsEmptyOption] = useState(false);
@@ -49,25 +49,26 @@ function QuizForm({ openForm, onOpenForm }: Props) {
     setIsUpdate(true);
     const ques = questions.find((q) => q.id === id);
     setQuestion(ques || null);
+    reset({ name: quiz.name, description: quiz.description });
   };
 
   const onSubmit = (data: FormValues) => {
-    if (openForm) {
-      const emptyOption = options.some((option) => option.name === "");
+    const emptyOption = options.some((option) => option.name === "");
 
-      const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
-      setIsEmptyOption(emptyOption);
-      if (!checkOptionTrueAnswer)
-        return toast.warning("At least one option is true");
-      if (isEmptyOption) return;
-    }
+    const checkOptionTrueAnswer = options.some((o) => o.isCorrect === true);
+    setIsEmptyOption(emptyOption);
+    if (!checkOptionTrueAnswer)
+      return toast.warning("At least one option is true");
+    if (isEmptyOption) return;
     setQuiz({ ...data, questions: questions });
     navigate("/");
   };
 
   useEffect(() => {
-    reset({ name: quiz.name, description: quiz.description });
-  }, []);
+    if (quiz) {
+      reset({ name: quiz.name, description: quiz.description });
+    }
+  }, [quiz]);
 
   return (
     <FormProvider {...methods}>
@@ -96,15 +97,17 @@ function QuizForm({ openForm, onOpenForm }: Props) {
           </form>
         </div>
       </div>
-      <QuizList
-        data={{
-          name: quiz.name,
-          description: quiz.description,
-          questions: questions,
-        }}
-        onDeleteQuestion={handleDeleteQuestion}
-        getQuestion={handleGetQuestion}
-      />
+      {quiz && (
+        <QuizList
+          data={{
+            name: quiz.name,
+            description: quiz.description,
+            questions: questions,
+          }}
+          onDeleteQuestion={handleDeleteQuestion}
+          getQuestion={handleGetQuestion}
+        />
+      )}
       {openForm && (
         <Questions
           question={question!}

@@ -12,7 +12,7 @@ function QuizEditor() {
     <div className={`${styles.container} ${styles.editorPage}`}>
       <h1 className={styles.title}>Quiz editor page</h1>
       <div className={styles.wrapper}>
-        <div>
+        <div style={{ width: "50%" }}>
           <div className={styles.buttons}>
             <Link to={"/"}>
               <Button variant="outline">Home page</Button>

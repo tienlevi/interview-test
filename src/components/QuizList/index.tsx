@@ -79,6 +79,8 @@ function QuizList({
     setShowAnswer(false);
   };
 
+  if (!data) return null;
+
   return (
     <div className={styles.quizContainer}>
       <div className={styles.quizInfo}>
@@ -88,7 +90,7 @@ function QuizList({
         </div>
       </div>
       <div className={styles.quiz}>
-        {data.questions.map((question, index) => (
+        {data.questions?.map((question, index) => (
           <div key={question.id} className={styles.question}>
             <div className="">
               <div className={styles.quizName}>
