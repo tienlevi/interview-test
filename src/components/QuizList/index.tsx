@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 import { IOption, IQuestion } from "@/interfaces/question";
 import { Check, X } from "lucide-react";
 import { toast } from "react-toastify";
+import { exportToJSONFile } from "@/utils/json";
 
 interface Props {
   data: IQuiz;
@@ -145,6 +146,12 @@ function QuizList({
             variant="black"
           >
             Submit quiz
+          </Button>
+          <Button
+            onClick={() => exportToJSONFile(JSON.stringify(data))}
+            variant="primary"
+          >
+            Export this quiz to JSON
           </Button>
         </div>
       </div>
