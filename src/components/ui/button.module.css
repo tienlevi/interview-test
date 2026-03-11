@@ -5,6 +5,10 @@
   cursor: pointer;
 }
 
+.btn:disabled {
+  opacity: 0.6;
+}
+
 .btnBgRed {
   background-color: var(--red-color);
   color: white;

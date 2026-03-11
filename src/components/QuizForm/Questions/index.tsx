@@ -38,7 +38,6 @@ function Questions({
   onCloseForm,
   onUpdate,
 }: Props) {
-  console.log("🚀 ~ Questions ~ question:", question);
   const { quiz, setQuiz } = useQuizStore();
   const methods = useForm<FormQuestionValues>();
   const {
